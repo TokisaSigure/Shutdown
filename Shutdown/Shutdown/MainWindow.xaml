@@ -4,8 +4,9 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <TextBox Height="25" HorizontalAlignment="Left" Margin="145,111,0,0" Name="Setting" VerticalAlignment="Top" Width="66" />
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="216,115,0,0" Name="textBlock1" Text="時間後にシャットダウン" VerticalAlignment="Top" Width="142" />
-        <Button Content="オフタイマーセット" Height="42" HorizontalAlignment="Left" Margin="184,171,0,0" Name="Button" VerticalAlignment="Top" Width="116" Click="button1_Click" />
-        <Label Content="Label" Height="23" HorizontalAlignment="Left" Margin="41,19,0,0" Name="TimerTest" VerticalAlignment="Top" Width="54" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="216,115,0,0" Name="textBlock1" Text="時間後に" VerticalAlignment="Top" Width="142" />
+        <Button Content="シャットダウン" Height="37" HorizontalAlignment="Left" Margin="216,166,0,0" Name="Button" VerticalAlignment="Top" Width="125" Click="button1_Click" />
+        <Label Content="Label" Height="23" HorizontalAlignment="Left" Margin="41,19,0,0" Name="TimerTest" VerticalAlignment="Top" Width="283" />
+        <Button Content="再起動" Height="37" HorizontalAlignment="Left" Margin="65,166,0,0" Name="restart" VerticalAlignment="Top" Width="125" Click="restart_Click" />
     </Grid>
 </Window>

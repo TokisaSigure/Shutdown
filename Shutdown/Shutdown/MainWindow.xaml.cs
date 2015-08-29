@@ -26,17 +26,26 @@ namespace Shutdown
     {
         int timer = 0 , setTime;//タイマー,設定時間
         Boolean start = false;//タイマー起動の有無
-        ProcessStartInfo psi;//Shutdown.exeを起動するための布石,外部アプリを起動するための宣言
+        ProcessStartInfo psi;
+        Process p;
+        DispatcherTimer dispatcherTimer;
 
         public MainWindow()
         {
             InitializeComponent();//初期化コンテンツ
-            psi.FileName = "shutdown.exe";//呼び出すアプリケーションにshut(略)を追加
-            psi.Arguments = "/r";//シャットダウンアクション、lでログオフ,rで再起動,sでシャットダウン,fで強制的に全アプリケーション終了
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();//タイマー宣言
+            /*----------------shutdown.exe設定----------------------------*/
+            psi = new ProcessStartInfo();
+            psi.FileName = @"C:\Windows\System32\shutdown.exe";//呼び出すアプリケーションにshut(略)を設定
+            //ウィンドウを表示しないようにする
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
+            /*----------------shutdwon.exe設定ここまで--------------------*/
+            /*----------------------タイマー設定--------------------------*/
+            dispatcherTimer = new DispatcherTimer();//タイマー宣言
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);//重複して呼び出されるコンテンツ
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);//呼び出されるタイミング指定、1秒ごとに
             dispatcherTimer.Start();//タイマー起動
+            /*----------------------タイマー設定ここまで-------------------*/
         }
 
         void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -45,18 +54,55 @@ namespace Shutdown
             {
                 ++timer;//カウントダウン追加
                 this.TimerTest.Content = timer;//タイマ―チェック用
-                if (timer >= setTime)
+                if (timer >= setTime * 60 * 60)
                 {
-                    Process p = Process.Start(psi);//シャットダウン
+                    dispatcherTimer.Stop();
+                    p = Process.Start(psi);//シャットダウン
+                    start = !start;
                 }
             }
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            setTime = int.Parse(this.Setting.Text);
-            this.Button.Visibility = Visibility.Hidden; 
-            start = !start; 
+            if (!start)
+            {
+                setTime = int.Parse(this.Setting.Text);
+                psi.Arguments = @"/s"; //シャットダウンアクション、lでログオフ,rで再起動,sでシャットダウン,fで強制的に全アプリケーション終了
+                this.Button.Content = "タイマーキャンセル";
+                this.restart.Content = "タイマーキャンセル";
+                start = !start;
+            }
+            else
+            {
+                start = !start;
+                timer = 0;
+                this.Button.Content = "シャットダウン";
+                this.restart.Content = "再起動";
+                MessageBox.Show("タイマーを停止しました。\n※シャットダウン1分前の場合は停止不可能です※");
+            }
+        }
+
+        private void restart_Click(object sender, RoutedEventArgs e)
+        {
+            if (!start)
+            {
+                setTime = int.Parse(this.Setting.Text);
+                psi.Arguments = @"/r"; //シャットダウンアクション、lでログオフ,rで再起動,sでシャットダウン,fで強制的に全アプリケーション終了
+                this.Button.Content = "タイマーキャンセル";
+                this.restart.Content = "タイマーキャンセル";
+                start = !start;
+            }
+            else
+            {
+                start = !start;
+                psi.Arguments = @"/a";//シャットダウン処理停止
+                p = Process.Start(psi);
+                timer = 0;
+                this.Button.Content = "シャットダウン";
+                this.restart.Content = "再起動";
+                MessageBox.Show("タイマーを停止しました。\n※シャットダウン1分前の場合は停止不可能です※");
+            }
         }
     }
 }
