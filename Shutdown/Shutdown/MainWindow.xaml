@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <TextBox Height="25" HorizontalAlignment="Left" Margin="145,111,0,0" Name="textBox1" VerticalAlignment="Top" Width="66" />
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="145,111,0,0" Name="Setting" VerticalAlignment="Top" Width="66" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="216,115,0,0" Name="textBlock1" Text="時間後にシャットダウン" VerticalAlignment="Top" Width="142" />
-        <Button Content="オフタイマーセット" Height="42" HorizontalAlignment="Left" Margin="184,171,0,0" Name="button1" VerticalAlignment="Top" Width="116" Click="button1_Click" />
+        <Button Content="オフタイマーセット" Height="42" HorizontalAlignment="Left" Margin="184,171,0,0" Name="Button" VerticalAlignment="Top" Width="116" Click="button1_Click" />
+        <Label Content="Label" Height="23" HorizontalAlignment="Left" Margin="41,19,0,0" Name="TimerTest" VerticalAlignment="Top" Width="54" />
     </Grid>
 </Window>
