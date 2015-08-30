@@ -24,7 +24,7 @@ namespace Shutdown
     /// </summary>
     public partial class MainWindow : Window
     {
-        int timer = 0 , setTime;//タイマー,設定時間
+        int timer = 0 , setTime,timeLimit;//タイマー,設定時間,残り時間
         Boolean start = false;//タイマー起動の有無
         ProcessStartInfo psi;
         Process p;
@@ -53,8 +53,9 @@ namespace Shutdown
             if (start)
             {
                 ++timer;//カウントダウン追加
-                this.TimerTest.Content = timer;//タイマ―チェック用
-                if (timer >= setTime * 60 * 60)
+                timeLimit = setTime - timer;
+                this.TimerTest.Content = "シャットダウンまで "+(timeLimit/3600+"時間"+timeLimit/60%60+"分"+timeLimit%60+"秒");//残り時間表示
+                if (timeLimit<=0)
                 {
                     dispatcherTimer.Stop();
                     p = Process.Start(psi);//シャットダウン
@@ -67,7 +68,7 @@ namespace Shutdown
         {
             if (!start)
             {
-                setTime = int.Parse(this.Setting.Text);
+                setTime = int.Parse(this.Setting.Text)*3600+int.Parse(this.minBox.Text)*60;
                 psi.Arguments = @"/s"; //シャットダウンアクション、lでログオフ,rで再起動,sでシャットダウン,fで強制的に全アプリケーション終了
                 this.Button.Content = "タイマーキャンセル";
                 this.restart.Content = "タイマーキャンセル";
@@ -87,11 +88,22 @@ namespace Shutdown
         {
             if (!start)
             {
-                setTime = int.Parse(this.Setting.Text);
-                psi.Arguments = @"/r"; //シャットダウンアクション、lでログオフ,rで再起動,sでシャットダウン,fで強制的に全アプリケーション終了
-                this.Button.Content = "タイマーキャンセル";
-                this.restart.Content = "タイマーキャンセル";
-                start = !start;
+                try
+                {
+                    if (Setting.Text.Equals(""))
+                        Setting.Text = "0";
+                    if (minBox.Text.Equals(""))
+                        minBox.Text = "0";
+                    setTime = (int.Parse(this.Setting.Text) * 3600) + (int.Parse(this.minBox.Text) * 60);
+                    psi.Arguments = @"/r"; //シャットダウンアクション、lでログオフ,rで再起動,sでシャットダウン,fで強制的に全アプリケーション終了
+                    this.Button.Content = "タイマーキャンセル";
+                    this.restart.Content = "タイマーキャンセル";
+                    start = !start;
+                }
+                catch
+                {
+                    MessageBox.Show("エラーが検出されました。\n半角数字を入力してください");
+                }
             }
             else
             {

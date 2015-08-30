@@ -1,12 +1,14 @@
 ﻿<Window x:Class="Shutdown.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525" Icon="/Shutdown;component/img/Clock.ico">
     <Grid>
-        <TextBox Height="25" HorizontalAlignment="Left" Margin="145,111,0,0" Name="Setting" VerticalAlignment="Top" Width="66" />
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="216,115,0,0" Name="textBlock1" Text="時間後に" VerticalAlignment="Top" Width="142" />
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="110,111,0,0" Name="Setting" VerticalAlignment="Top" Width="66" />
+        <TextBlock Height="17" Margin="188,114,279,0" Name="textBlock1" Text="時間" VerticalAlignment="Top" />
         <Button Content="シャットダウン" Height="37" HorizontalAlignment="Left" Margin="216,166,0,0" Name="Button" VerticalAlignment="Top" Width="125" Click="button1_Click" />
         <Label Content="Label" Height="23" HorizontalAlignment="Left" Margin="41,19,0,0" Name="TimerTest" VerticalAlignment="Top" Width="283" />
         <Button Content="再起動" Height="37" HorizontalAlignment="Left" Margin="65,166,0,0" Name="restart" VerticalAlignment="Top" Width="125" Click="restart_Click" />
+        <TextBox Height="25" HorizontalAlignment="Right" Margin="0,110,209,0" Name="minBox" VerticalAlignment="Top" Width="66" />
+        <Label Content="分後に" Height="24" HorizontalAlignment="Left" Margin="302,111,0,0" Name="label1" VerticalAlignment="Top" Width="54" />
     </Grid>
 </Window>
